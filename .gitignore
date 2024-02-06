@@ -5,6 +5,7 @@ notes.org
 # Ignore build and test artifacts
 
 out/
+*.class
 
 # Ignore editor settings and dotfiles
 

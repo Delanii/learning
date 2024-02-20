@@ -1,0 +1,268 @@
+#+title: Notes from preparing for a new developer job
+#+author: Tomas Krulis
+
+#+startup: align
+#+startup: shrink
+#+startup: overview
+#+startup: hideblocks
+
+* KB incubator notes
+
+- it's not about a start and an end to the program, it's about the most intensive phase and the (less) intensive follow-up
+- teamwork is a key point
+- cycles of theory - task - review - task rework
+- gradual transfer into squads/teams
+- self-trained people + internal mobility + career change
+- during selection, there's a focus on picking people that will be able to finish and be successful in the job. Still, theoretically, there's the risk of the person not feeling up to do the job.
+- juniors sometimes do stuff that seniors doesn't want to do -- I should expect that they will expect humble behavior and doing what they want me to do
+- about 10 people are accepted to the position
+- starts every 3 months
+
+* Java
+
+** Java syntax
+
+*** Functions
+
+- =void=: data type which returns nothing (so does only a side-effect)
+- the =main()= function is the entry point of a Java program. The =main()= function is the first thing that runs when the code runs.
+- in Java, a function has to always belong to a class
+- a class in Java could be viewed as a container for functions
+- there should always be a =Main= class that contains the =main()= function
+- a function, that is part of a class (so, in Java, every function) is called a method of that class
+- each function or class has an access modifier. Access modifier specifies, whether other classes and functions in the program can use the class or function. For example, =public= or =private=
+- the =public= access modifier is used most frequently
+- functions follow ~camelCase~, classes follow ~PascalCase~
+- the =main()= function should always be =static=
+
+#+begin_example
+accessModifier ReturnType FunctionName( ArgumentType argumentName, OtherArgType otherArgName) {
+  ... code block
+}
+#+end_example
+
+for example:
+
+#+begin_src java
+public static void greetUser(String name) {
+    System.out.println("Hello " + name);
+}
+
+public static String greetUserB(String firstName, String lastName) {
+    String greeting = "Hello " + firstName + " " + lastName;
+    return greeting;
+};
+#+end_src
+
+*** Classes
+
+#+begin_example
+accessModifier class MyClass {
+
+  accessModifier fieldType varname;
+
+  accessModifier ReturnType FunctionA() {
+    ... code block
+  },
+  accessModifier ReturnType functionB() {
+    ... code block
+  }
+}
+#+end_example
+
+for example:
+
+#+begin_src java
+public class Main {
+
+    public String text;
+
+    public void main() {
+        ... code block
+    }
+}
+#+end_src
+
+- =accessModifier= defines, whether other classes in the same project can use the class.
+
+  Available values:
+
+  + =public=
+  + =private=
+
+- =this= is the reference to the current object; for example:
+
+#+begin_src java
+public class TextBox {
+
+    public String text; // a class field
+
+    public void setText(String text) {
+        this.text = text; // the `text` field of the TextBox object is set to the value passed to the `setText` method
+    }
+}
+#+end_src
+
+**** Abstract classes
+
+- cannot be instantiated
+
+*** Variables
+
+#+begin_example
+variableType variableName = value;
+#+end_example
+
+for example:
+
+#+begin_src java
+int age = 10;
+#+end_src
+
+- the ~=~ is assignment operator
+- the first assignment to a variable also initializes the variable
+- every assignment has to end with =;=
+
+*** Constants
+
+- constants are defined with the reserved word =final=:
+
+#+begin_src java
+final float PI = 3.14F;
+#+end_src
+
+*** Typecasting
+
+- typecasting = converting from one type to another on the fly
+
+#+begin_src java
+double result = (double)10 / (double)3;
+#+end_src
+
+  typecasting the =int= numbers to =double= to get the =result= with the =double= type
+
+** Java code execution
+
+1. The Java compiler reads the =.java= file and compiles it to the =.class= bytecode. The compiler is part of the Java SDK.
+
+   #+begin_src sh
+   javac Main.java
+   #+end_src
+
+   - the =.class= files are platform independent
+   - =.class= files are interpreted by the Java virtual machine (JVM) and translated to the code native to the platform running the code. The JVM is part of Java runtime environment (JRE).
+
+2. Interpreting the =.class= file directly with the JVM:
+
+   #+begin_src sh
+   cd ../..
+   java com.tomaskrulis.Main
+   #+end_src
+
+** Types
+
+*** Primitive types
+
+|---------+---------+-------------------|
+| *Type*  | *Bytes* | *Range*           |
+|---------+---------+-------------------|
+| byte    |       1 | [-128, 127]       |
+| short   |       2 | [-32k, 32k]       |
+| int     |       4 | [-2*10^9; 2*10^9] |
+| long    |       8 |                   |
+| float   |       4 |                   |
+| double  |       8 |                   |
+| char    |       2 | single character  |
+| boolean |       1 |  true, false      |
+|---------+---------+-------------------|
+
+- primitive type variables are always stored in a different part of the memory, so they don't influence each other
+- the primitive type variables actually store the value of the variable
+
+*** Reference types
+
+- before initializing a variable with a reference type, you have to import the class that defines the reference type
+- when initializing, we have to allocate the memory with the =new= keyword, and then use the class constructor
+
+  #+begin_src java
+  Date now = new Date();
+  #+end_src
+
+- the variable =new= is an object, which is an instance of the class =Date=
+- you can access the object methods with the =.= operator, like =now.getTime()=
+- the dereferencing, destruction and release of the memory when an object doesn't exist is handled by the JRE (JVM)
+- when a reference type variable is initialized, the object is stored in the memory, but the variable contains only the memory address of the object (the pointer to the object)
+
+#+begin_src java
+Point point1 = new Point(1,1);
+Point point2 = point1;
+#+end_src
+
+  the =point2= contains the memory address of the =point1= object, and not the actual =Point()= object. This is why it's a reference type, because it contains only references to memory locations or the objects instead of the objects themselves.
+
+**** Strings
+
+- in Java, strings are immutable. Methods that modify a string always return a new string object instead
+- backslash =\= is the escape character in strings
+- =\n= writes a new line to a string
+- comparison operators with just strings don't work. Because strings are reference types, they return the memory address of the string, and not the actual text. For strings, there is the =.equals()= =String= class method.
+
+**** Arrays
+
+Initialization:
+
+#+begin_example
+elementType[] numbers = new elementType[arrayLength];
+#+end_example
+
+#+begin_src java
+int[] numbers = new int[5];
+#+end_src
+
+- in an array, all items of the array are initialized when creating the array with a default value -- for the =int= type, its 0.
+- in Java, the length of an array cannot change after the initialization of the array
+- to have a variable length, I should use collections
+
+** Math operations
+
+- Java supports =+=, =-=, =*=, =/= and =%=
+- when I want to get a =float= by division, all values in the operation have to have the =float= type
+- =++= and =--= and the increment and decrement operators, so:
+
+  #+begin_src java
+  int x = 5;
+  x++; // x = 6
+  #+end_src
+
+- order of math operations follows the math rules, luckily
+
+** Flow control
+
+*** For loop
+
+#+begin_example
+for (variable initialization; condition; loop increment) {
+  code block
+}
+#+end_example
+
+example:
+
+#+begin_src java
+for(int i = 0; i < 5; i++) {
+    System.out.println("Java");
+}
+#+end_src
+
+How do the iterations work:
+
+1. The control flow variable is initialized
+2. The condition is evaluated.
+3. If the condition evaluates to =true=, then Java runs the code block.
+4. After the code block finishes, Java evaluates the loop increment.
+5. Next iteration starts.
+6. =goto= step 2.
+
+** OOP
+
+- a =class= is a blueprint for creating =object=; in other words, an =object= is an instance of a =class=

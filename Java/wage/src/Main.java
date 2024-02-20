@@ -1,13 +1,11 @@
 public class Main {
     public static void main(String[] args) {
 
-        int baseSalary = 50_000;
-        int extraHours = 10;
-        int hourlyRate = 20;
+        var employee = new Employee();
 
-        int wage = calculateWage(baseSalary,
-                extraHours,
-                hourlyRate);
+        employee.baseSalary = 50_000;
+        employee.hourlyRate = 20;
+        int wage = employee.calculateWage(10);
 
        System.out.println(wage);
     }

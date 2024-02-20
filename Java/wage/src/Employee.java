@@ -10,7 +10,7 @@ public class Employee {
         this.baseSalary = baseSalary; // So this happens if the above is `false`
     }
 
-    public int getBaseSalary(){
+    private int getBaseSalary(){
         return baseSalary;
     }
 
@@ -21,7 +21,7 @@ public class Employee {
         this.hourlyRate = hourlyRate; // So this happens if the above is `false`
     }
 
-    public int getHourlyRate(){
+    private int getHourlyRate(){
         return hourlyRate;
     }
 

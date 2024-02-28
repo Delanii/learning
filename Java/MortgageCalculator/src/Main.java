@@ -142,7 +142,7 @@ public class Main {
     public static double calculateRemainder(int principal,
                                             double annualInterestRatePercent,
                                             byte periodYears,
-                                            byte remainingNumberOfPayments) {
+                                            short remainingNumberOfPayments) {
 
         // Utility calculations
         double monthlyInterestRate = calculateMonthlyInterestRate(annualInterestRatePercent);
@@ -160,7 +160,7 @@ public class Main {
                                            byte periodYears) {
         showHeading("Payment schedule");
 
-        for(byte i = 1; i <= calculateNumberOfPayments(periodYears); i++) {
+        for(short i = 1; i <= calculateNumberOfPayments(periodYears); i++) {
            double remainder = calculateRemainder(principal,
                    annualInterestRatePercent, periodYears, i);
            System.out.println(NumberFormat.getCurrencyInstance().format(remainder));

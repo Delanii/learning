@@ -1,9 +1,15 @@
 public class Employee {
 
-    private int baseSalary = 0;
-    private int hourlyRate = 0;
+    private int baseSalary;
+    private int hourlyRate;
 
-    public void setBaseSalary(int baseSalary){
+    public Employee(int baseSalary,
+                    int hourlyRate) { // class constructor doesn't have a return type
+        setBaseSalary(baseSalary);   // If the field has a setter, use that to leverage the validation that is part of the setter
+        setHourlyRate(hourlyRate);
+    }
+
+    private void setBaseSalary(int baseSalary){
         if (baseSalary <= 0) {
             throw new IllegalArgumentException("Salary has to be more than zero."); // throwing error terminates the program
         }
@@ -14,7 +20,7 @@ public class Employee {
         return baseSalary;
     }
 
-    public void setHourlyRate(int hourlyRate){
+    private void setHourlyRate(int hourlyRate){
         if (hourlyRate <= 0) {
             throw new IllegalArgumentException("Hourly rate has to be more than zero."); // throwing error terminates the program
         }

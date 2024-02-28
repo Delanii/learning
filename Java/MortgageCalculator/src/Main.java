@@ -46,10 +46,6 @@ public class Main {
                 "periodYears",
                 "Period must be a number between " + PERIOD_YEARS_MIN + " and " + PERIOD_YEARS_MAX + ".");
 
-        double monthlyPay = calculateMonthlyPay(principal,
-                annualInterestRatePercent,
-                periodYears);
-
         // Show the monthly pay result
         showMonthlyPay(principal,
                 annualInterestRatePercent,

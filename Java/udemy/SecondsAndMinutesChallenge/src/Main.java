@@ -1,14 +1,27 @@
 public class Main {
 
-    public static main(String[] args){
+    public static void main(String[] args){
 
+        System.out.println(getDurationString(-30));
+        System.out.println(getDurationString(0));
+        System.out.println(getDurationString(30));
+        System.out.println(getDurationString(258));
+        System.out.println(getDurationString(22258));
+
+        System.out.println(getDurationString(-5, -3));
+        System.out.println(getDurationString(-5, 3));
+        System.out.println(getDurationString(5, -3));
+        System.out.println(getDurationString(5, 69));
+        System.out.println(getDurationString(0, 9));
+        System.out.println(getDurationString(5, 9));
+        System.out.println(getDurationString(129, 9));
     }
 
     public static String getDurationString(int seconds){
         if (isValid(seconds)) {
 
-            int hours = seconds % 3600;
-            int minutes = (seconds - (hours * 3600)) % 60;
+            int hours = convertToHours(seconds);
+            int minutes = convertToMinutes(seconds) - hours * 60;
             int remainder = seconds - hours * 3600 - minutes * 60;
 
             return padNumbers(hours) + "h " +
@@ -22,12 +35,9 @@ public class Main {
     public static String getDurationString(int minutes, int seconds){
         if (isValid(minutes, seconds)) {
 
-            int hours = minutes % 60;
-            int minutesRemainder = minutes - hours * 60;
+            int totalSeconds = minutes * 60 + seconds;
+            return getDurationString(totalSeconds);
 
-            return padNumbers(hours) + "h " +
-                    padNumbers(minutesRemainder) + "m " +
-                    padNumbers(seconds);
         } else {
             return "You provided invalid values. Minutes and seconds have to be a positive number," +
                     " and seconds have to also less than 59";
@@ -48,6 +58,14 @@ public class Main {
         } else {
             return false;
         }
+    }
+
+    private static int convertToHours(int seconds){
+        return (int)Math.floor(convertToMinutes(seconds) / 60);
+    }
+
+    private static int convertToMinutes(int seconds){
+        return (int)Math.floor(seconds / 60);
     }
 
     private static String padNumbers(int number){

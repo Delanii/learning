@@ -21,8 +21,8 @@ public class Main {
         if (isValid(seconds)) {
 
             int hours = convertToHours(seconds);
-            int minutes = convertToMinutes(seconds) - hours * 60;
-            int remainder = seconds - hours * 3600 - minutes * 60;
+            int minutes = convertToMinutes(seconds) % 60;
+            int remainder = seconds % 60;
 
             return padNumbers(hours) + "h " +
                     padNumbers(minutes) + "m " +

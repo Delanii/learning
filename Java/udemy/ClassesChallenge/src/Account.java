@@ -6,6 +6,38 @@ public class Account {
     private String email = "";
     private String phoneNumber = "";
 
+    public Account(){
+
+        this(11111,
+                2.50,
+                "New user",
+                "account@default.com",
+                "+4200");
+
+        System.out.println("Empty constructor called.");
+    }
+
+    public Account(int accountNumber,
+                   double accountBalance,
+                   String customerName,
+                   String email,
+                   String phoneNumber){
+
+        System.out.println("Called account constructor with parameters.");
+
+        this.accountNumber = accountNumber;
+        this.accountBalance = accountBalance;
+        this.customerName = customerName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Account(String customerName,
+                   String email,
+                   String phoneNumber) {
+        this(9999, 5.55, customerName, email, phoneNumber);
+    } // This constructor has a default value for the explicitly set fields -- the `accountNumber` and `accountBalance` have a default value.
+
     public int getAccountNumber() {
         return accountNumber;
     }

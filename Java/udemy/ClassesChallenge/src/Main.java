@@ -25,5 +25,11 @@ public class Main {
 
         anotherAccount.setAccountBalance(54.21);
         System.out.println(anotherAccount.getAccountNumber() + " " + anotherAccount.getAccountBalance());
+
+        Customer myself = new Customer();
+        Customer irene = new Customer("Irene", "irene@mail.com");
+
+        System.out.println(myself.getCreditLimit());
+        System.out.println(irene.getCreditLimit());
     }
 }

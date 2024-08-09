@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const user = {
   name: 'Hedy Lamarr',
   imageUrl: 'https://i.imgur.com/yXOvdOSs.jpg',
@@ -54,13 +56,54 @@ function ShoppingList() {
   );
 }
 
+function SeparateButtonCounter() {
+
+  const [separateCount, setSeparateCount] = useState(0);
+
+  function separateHandleClick() {
+    setSeparateCount(separateCount + 1);
+  }
+
+  return (
+    <button onClick={separateHandleClick}>
+      You clicked {separateCount} times.
+    </button>
+  )
+}
+
+function SharedButtonCounter({ sharedCount, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+    >
+      Clicked {sharedCount} times
+    </button>
+  )
+}
+
 export default function MyApp() {
+
+  const [sharedCount, setSharedCount] = useState(0);
+
+  function handleSharedClick() {
+    setSharedCount(sharedCount + 1);
+  }
+
   return (
     <div>
       <h1>Welcome to my page</h1>
-      <MyButton />
-      <Profile />
-      <ShoppingList />
+        <MyButton />
+        <Profile />
+        <ShoppingList />
+
+        <h2>Counters</h2>
+        <h3>Separate counters</h3>
+          <SeparateButtonCounter />
+          <SeparateButtonCounter />
+
+        <h3>Shared counters</h3>
+          <SharedButtonCounter sharedCount={sharedCount} onClick={handleSharedClick} />
+          <SharedButtonCounter sharedCount={sharedCount} onClick={handleSharedClick} />
     </div>
   );
 }

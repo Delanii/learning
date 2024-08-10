@@ -1,6 +1,7 @@
 # Ignore personal notes
 
 notes.org
+**/slides/
 
 # Ignore build and test artifacts
 

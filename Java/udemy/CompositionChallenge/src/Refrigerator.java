@@ -1,7 +1,7 @@
 public class Refrigerator extends IOTAppliance{
 
-    private final String applianceName = "dish washer";
-    private final String actionName = "washing dishes";
+    private final String applianceName = "refrigerator";
+    private final String actionName = "ordering food";
 
     public void orderFood(){
         this.activate(applianceName, actionName);

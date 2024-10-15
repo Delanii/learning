@@ -4,13 +4,11 @@ public class SmartKitchen {
     private DishWasher dishWasher;
     private Refrigerator iceBox;
 
-    public SmartKitchen(CoffeeMaker brewMaster,
-                        DishWasher dishWasher,
-                        Refrigerator iceBox){
+    public SmartKitchen(){
 
-        this.brewMaster = brewMaster;
-        this.dishWasher = dishWasher;
-        this.iceBox = iceBox;
+        this.brewMaster = new CoffeeMaker();
+        this.dishWasher = new DishWasher();
+        this.iceBox = new Refrigerator();
     };
 
     public CoffeeMaker getBrewMaster() {

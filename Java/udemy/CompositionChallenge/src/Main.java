@@ -2,11 +2,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        CoffeeMaker brewMaster = new CoffeeMaker();
-        DishWasher washwash = new DishWasher();
-        Refrigerator coolerBox = new Refrigerator();
-
-        SmartKitchen myKitchen = new SmartKitchen(brewMaster, washwash, coolerBox);
+        SmartKitchen myKitchen = new SmartKitchen();
 
         myKitchen.doKitchenWork(true, true, false);
         myKitchen.doKitchenWork(true, false, false);

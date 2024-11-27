@@ -64,7 +64,7 @@ public class Printer {
 
             System.out.println("The printer is a duplex printer.");
 
-            printedPages = Math.ceilDiv(numberOfPages, 2);
+            printedPages = Math.ceilDiv(numberOfPages, 2); // or: (numberOfPages / 2) + (numberOfPages % 2)
             this.setPagesPrinted(this.getPagesPrinted() + printedPages);
         } else {
 

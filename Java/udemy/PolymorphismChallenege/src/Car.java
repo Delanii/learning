@@ -35,6 +35,21 @@ public class Car {
         this.inMotion = false;
     }
 
+    public static Car getCar(String description,
+                             String manufacturer,
+                             boolean combi,
+                             int numberOfSeats,
+                             int maximumSpeed,
+                             int fuelPercentage){
+
+        return new Car(description,
+                manufacturer,
+                combi,
+                numberOfSeats,
+                maximumSpeed,
+                fuelPercentage);
+    }
+
     public String getDescription() {
         return description;
     }

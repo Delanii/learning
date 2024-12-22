@@ -27,6 +27,25 @@ public class ElectricCar extends Car{
        this.batterySize = batterySize;
     }
 
+    public static ElectricCar getElectricCar(String description,
+                                             String manufacturer,
+                                             boolean combi,
+                                             int numberOfSeats,
+                                             int maximumSpeed,
+                                             int fuelPercentage,
+                                             double avgKmPerCharge,
+                                             int batterySize){
+
+        return new ElectricCar(description,
+                manufacturer,
+                combi,
+                numberOfSeats,
+                maximumSpeed,
+                fuelPercentage,
+                avgKmPerCharge,
+                batterySize);
+    }
+
     public double getAvgKmPerCharge() {
         return avgKmPerCharge;
     }

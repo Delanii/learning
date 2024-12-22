@@ -32,6 +32,29 @@ public class HybridCar extends Car{
         this.cylinders = cylinders;
     }
 
+    public static HybridCar getHybridCar(String description,
+                                         String manufacturer,
+                                         boolean combi,
+                                         int numberOfSeats,
+                                         int maximumSpeed,
+                                         int fuelPercentage,
+                                         String gearChange,
+                                         double avgKmPerLitre,
+                                         int batterySize,
+                                         int cylinders){
+
+        return new HybridCar(description,
+                manufacturer,
+                combi,
+                numberOfSeats,
+                maximumSpeed,
+                fuelPercentage,
+                gearChange,
+                avgKmPerLitre,
+                batterySize,
+                cylinders);
+    }
+
     public double getAvgKmPerLitre() {
         return avgKmPerLitre;
     }

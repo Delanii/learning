@@ -29,6 +29,27 @@ public class GasPoweredCar extends Car{
         this.cylinders = cylinders;
     }
 
+    public static GasPoweredCar getGasPoweredCar(String description,
+                            String manufacturer,
+                            boolean combi,
+                            int numberOfSeats,
+                            int maximumSpeed,
+                            int fuelPercentage,
+                            String gearChange,
+                            double avgKmPerLitre,
+                            int cylinders){
+
+        return new GasPoweredCar(description,
+                manufacturer,
+                combi,
+                numberOfSeats,
+                maximumSpeed,
+                fuelPercentage,
+                gearChange,
+                avgKmPerLitre,
+                cylinders);
+    }
+
     public String getGearChange() {
         return gearChange;
     }

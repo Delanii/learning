@@ -7,6 +7,7 @@ notes.org
 
 out/
 *.class
+__pycache__/
 
 # Ignore editor settings and dotfiles
 

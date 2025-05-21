@@ -33,3 +33,19 @@
 - by default, playwright runs browesers in headless mode (no browser window)
 - frequently, it's good to create new context with the `new_context()` method. In the new context, you have a clear cookies store, which is good for, for example, user login testing. This is similar to starting a new incognito window in Chrome.
 - from the context, you create a new `Page` objects, which have methods to visit a URL
+- playwright has a `page` fixture, which creates a new chromium browser in the headless mode and with a single context. 
+- it is possible to enforce the headed mode on the CLI with the `--headed` option (for example: `pytest -s --headed`)
+
+## Locators
+
+- locators allow you to find objects on web pages through their attributes. For example:
+
+  - `page.get_by_label("Label text")` gets you the object (for example, text box), that is connected to the label. The object has to be wrapped in the `<label>` tag though; or, the label has to refer in it's `for` attribute the `id` of the object zou want to locate. For example:
+
+  ```html
+  <label for=username>Username</label>
+  <input type="text" id="username">
+  ```
+
+  - `page.get_by_role("button")` gets the object based on its type. There is a list of options available, like `button` or `checkbox`
+  - `page.locator("CSS selector")` gets the object based on its CSS selector. This is universal option, but requires writing a little bit of CSS ...

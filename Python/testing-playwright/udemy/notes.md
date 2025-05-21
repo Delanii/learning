@@ -29,3 +29,7 @@
 # Playwright
 
 - playwright has automatic waiting mechanism, so there shouldn't be a need to manually manage async code
+- playwright provides a global `playwright` fixture, which contains methods to interact with browser engines; for example, `playwright.chromium.launch()` starts the chromium browser
+- by default, playwright runs browesers in headless mode (no browser window)
+- frequently, it's good to create new context with the `new_context()` method. In the new context, you have a clear cookies store, which is good for, for example, user login testing. This is similar to starting a new incognito window in Chrome.
+- from the context, you create a new `Page` objects, which have methods to visit a URL

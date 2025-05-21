@@ -21,7 +21,7 @@ def test_initial_check(my_prepare):
     print("First test")
     assert my_prepare == "pass"
 
+@pytest.mark.skip # skips the test
 def test_followup(my_prepare, my_bad):
     print("First test")
-    assert my_prepare == "pass"
-    # assert my_bad == "pass"
+    assert my_bad == "pass"

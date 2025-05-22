@@ -51,3 +51,5 @@
 
   - `page.get_by_role("button")` gets the object based on its type. There is a list of options available, like `button` or `checkbox`
   - `page.locator("CSS selector")` gets the object based on its CSS selector. This is universal option, but requires writing a little bit of CSS ...
+
+- locators always return all objects on the page that match the locator criteria. To get a specific element, you need to use selection or filtering.

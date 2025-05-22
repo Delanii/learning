@@ -35,6 +35,8 @@
 - from the context, you create a new `Page` objects, which have methods to visit a URL
 - playwright has a `page` fixture, which creates a new chromium browser in the headless mode and with a single context. 
 - it is possible to enforce the headed mode on the CLI with the `--headed` option (for example: `pytest -s --headed`)
+- playwright automatically awaits and retries during wait times. For example, it automatically awaits until page reloads after clicking a button or until a component appears. Full reference for supported waiting events: https://playwright.dev/docs/actionability
+- playwright awaitable assertions are used with the `expect` keyword together with an assertion method, like `expect(locator).to_be_visible()`. `locator` compatibility is in the same reference as above(not all locators support all assertion methods)
 
 ## Locators
 

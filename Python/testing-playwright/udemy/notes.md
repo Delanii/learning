@@ -37,6 +37,7 @@
 - it is possible to enforce the headed mode on the CLI with the `--headed` option (for example: `pytest -s --headed`)
 - playwright automatically awaits and retries during wait times. For example, it automatically awaits until page reloads after clicking a button or until a component appears. Full reference for supported waiting events: https://playwright.dev/docs/actionability
 - playwright awaitable assertions are used with the `expect` keyword together with an assertion method, like `expect(locator).to_be_visible()`. `locator` compatibility is in the same reference as above(not all locators support all assertion methods)
+- alert pop-ups are javascript events, and they are not in DOM: They are handled with event listener `page.on`. The listener can listen for multiple events. One of them is the `dialog` event, so `page.on("dialog", function)`. The second argument is a function that is called when the event happens.
 
 ## Locators
 
@@ -52,4 +53,5 @@
   - `page.get_by_role("button")` gets the object based on its type. There is a list of options available, like `button` or `checkbox`
   - `page.locator("CSS selector")` gets the object based on its CSS selector. This is universal option, but requires writing a little bit of CSS ...
 
-- locators always return all objects on the page that match the locator criteria. To get a specific element, you need to use selection or filtering.
+- locators always return all objects on the page that match the locator criteria. To get a specific element, you need to use selection or filtering
+- there is no option to filter locators based on exact text directly, the only direct option checks if the locator contains the text. To get exact matching, you either need to use a regex or nest another locator in the filter, like: `page.locator("th").filter(has = page.get_by_text("Price", exact = True))`

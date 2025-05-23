@@ -41,5 +41,44 @@ def test_child_window(page: Page):
 
         if content is not None:
             email = [word for word in content.split(" ") if "@" in word][0]
-            domain = email.split("@")[1]
-            print(domain)
+            assert email == "mentor@rahulshettyacademy.com"
+
+def test_more_ui_checks(page: Page):
+    page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+
+    # Check if the testing edit box is visible
+    expect(page.get_by_placeholder("Hide/Show Example")).to_be_visible()
+
+    # Click the "Hide" button
+    page.locator("#hide-textbox").click()
+
+    # Check if the testing edit box is hidden
+    expect(page.get_by_placeholder("Hide/Show Example")).to_be_hidden()
+
+def test_alert(page: Page):
+    page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+    
+    page.on("dialog", lambda dialog: dialog.accept())
+    page.locator("#confirmbtn").click()
+
+def test_iframe(page: Page):
+    page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+
+    iframe = page.frame_locator("#courses-iframe")
+    iframe.get_by_role("link", name = "All Access plan").click()
+    expect(iframe.locator("body")).to_contain_text("Happy Subscibers") # Yes, there is a typo on the page ...
+
+def test_tables(page: Page):
+    page.goto("https://rahulshettyacademy.com/seleniumPractise/#/offers")
+
+    headers = page.locator("th")
+    price_col_index = 0
+
+    for index in range(headers.count()):
+        if page.locator("th").nth(index).filter(has = page.get_by_text("Price", exact = True)).count() > 0:
+            price_col_index = index
+
+    # print(price_col_index)
+
+    rice_row = page.locator("tr").filter(has = page.get_by_text("Rice", exact = True))
+    expect(rice_row.locator("td").nth(price_col_index)).to_have_text("37")

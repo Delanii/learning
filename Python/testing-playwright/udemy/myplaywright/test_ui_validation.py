@@ -82,3 +82,10 @@ def test_tables(page: Page):
 
     rice_row = page.locator("tr").filter(has = page.get_by_text("Rice", exact = True))
     expect(rice_row.locator("td").nth(price_col_index)).to_have_text("37")
+
+def test_hover(page: Page):
+    page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+
+    page.locator("#mousehover").hover()
+    page.get_by_role("link", name = "Top").click()
+

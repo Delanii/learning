@@ -28,3 +28,18 @@ def test_ui_validation_first(page: Page):
     # Each product should be in the cart as well
     for product in products:
         expect(page.locator(".media-body").filter(has_text = product)).to_be_visible()
+
+def test_child_window(page: Page):
+    page.goto("https://rahulshettyacademy.com/loginpagePractise")
+
+    # Waiting for popups or new tabs is done with closures
+    # `page.expect_popup()` is a event listener -- it waits until a specific event happens (popup window). When the event triggers (a new page pops up), the event result is stored in `newtab`.
+    with page.expect_popup() as newtab:
+        page.locator(".blinkingText").filter(has_text = "Free").click()
+        child_page = newtab.value # Store the page created from clicking at the link in a new `page` object
+        content = child_page.locator(".red").text_content()
+
+        if content is not None:
+            email = [word for word in content.split(" ") if "@" in word][0]
+            domain = email.split("@")[1]
+            print(domain)

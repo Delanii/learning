@@ -88,4 +88,3 @@ def test_hover(page: Page):
 
     page.locator("#mousehover").hover()
     page.get_by_role("link", name = "Top").click()
-

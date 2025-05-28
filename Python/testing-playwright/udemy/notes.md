@@ -55,3 +55,20 @@
 
 - locators always return all objects on the page that match the locator criteria. To get a specific element, you need to use selection or filtering
 - there is no option to filter locators based on exact text directly, the only direct option checks if the locator contains the text. To get exact matching, you either need to use a regex or nest another locator in the filter, like: `page.locator("th").filter(has = page.get_by_text("Price", exact = True))`
+
+## Codegen
+
+```sh
+playwright codegen https://project-base-url
+```
+
+opens two browsers:
+
+- internet browser (chrome)
+- playwright inspector, which records your actions in the browser as playwright code
+
+## API testing
+
+- uses the `playwright` fixture the same as UI testing; but a specific member of the fixture: `playwright.request`
+- the API context is set up with the `playwright.request.new_context()` method. One of the main features is defining the `base_url`.
+- the `request` member has methods connected with the HTTP methods: `post`, `get`, ...

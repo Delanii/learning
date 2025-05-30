@@ -1,6 +1,5 @@
 from playwright.sync_api import Playwright, expect
 from utils.api_base import APIUtils 
-
 import time 
 
 def test_e2e_web_api(playwright: Playwright, get_user_credentials):

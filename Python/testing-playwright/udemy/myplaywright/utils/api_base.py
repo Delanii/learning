@@ -17,7 +17,6 @@ class APIUtils:
 
         # Check if the login was a success
         assert response.ok
-        print(response.json()) 
         return response.json()["token"]
 
     def create_order(self, playwright: Playwright, base_url, user_credentials):
@@ -33,6 +32,5 @@ class APIUtils:
             )
 
         assert response.ok
-        print(response.json())
         order_id = response.json()["orders"][0]
         return order_id

@@ -98,3 +98,37 @@ opens two browsers:
 ```js
 localStorage.setItem('key', 'value')
 ```
+
+# Best practices
+
+- avoid hardcoding test data in test cases
+- put test data in separate (data) files to create isolation between test data and test logic
+- use the "page object model" desing pattern to separate page locators from page actions
+- put reusable code in dedicated files like utility scripts or the `confetest.py` file
+- create global environment variables to set up the test environment
+- use grouping and tags to run targeted tests
+- generate test reposts
+- capture logs and screenshots for failed test cases
+- add CI/CD (for example with Jenkins)
+
+# Test parametrization
+
+- test parametrization goes further than just adding parameters to a test function. Test parametrization sets up the test in a way that it's running multiple times with different data. For example, in finance, you might want to test an active user, inactive user, a user with a business account, and similar
+- parametrization is set up with the `@pytest.mark.parametrize(identifier, iterable_data)` annotation
+- in addition, you need a fixture `identifier`, which returns that actual items from the `iterable_data`
+- the fixture is provided to the test as an argument:
+
+```py
+@pytest.fixture(scope = "session")
+def user_credentials(request):
+    return request.param
+
+@pytest.mark.parametrize("user_credentials", user_credentials_list)
+def test_my_test(user_credentials):
+    assert user_credentials
+```
+
+# Page object model design
+
+- the idea behind the page object model design is to separate page actions and navigation to a dedicated class instead of keeping it in the test logic
+- each page that the tests visit should have it's own page class

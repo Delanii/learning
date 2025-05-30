@@ -72,3 +72,12 @@ opens two browsers:
 - uses the `playwright` fixture the same as UI testing; but a specific member of the fixture: `playwright.request`
 - the API context is set up with the `playwright.request.new_context()` method. One of the main features is defining the `base_url`.
 - the `request` member has methods connected with the HTTP methods: `post`, `get`, ...
+
+## Intercepting API response
+
+- intercept the API response and change it before the response reaches the client browser. With that, you can mock different application states which might be hard to reach otherwise.
+- the actual interception is set up with a listener `page.route(url, handler, times)`:
+
+  + `url`: the API call URL. Accepts wildcards, so `https://dest/orders/*` intercepts all orders
+  + `handler`: is a function that is triggerred when playwright registers the `url`. The function has to accept the `route` meta argument that refers to the `url`, like `def myfunction(route): pass`
+  + `times`: how many times should the interception happen. 

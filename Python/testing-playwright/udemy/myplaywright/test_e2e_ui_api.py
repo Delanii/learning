@@ -3,7 +3,7 @@ from utils.api_base import APIUtils
 
 import time 
 
-def test_e2e_web_api(playwright: Playwright):
+def test_e2e_web_api(playwright: Playwright, get_user_credentials):
 
     """
     Scenario:
@@ -13,12 +13,10 @@ def test_e2e_web_api(playwright: Playwright):
     3. Check the order history if the order is recorded in the history.
     """
 
-    user_credentials = {"email": "rumbatumpa@gmail.com", "password": "MySecretPass1#"}
-
     # Create order
     api_utils = APIUtils()
     base_url = "https://rahulshettyacademy.com/api/"
-    order_id = api_utils.create_order(playwright, base_url, user_credentials)
+    order_id = api_utils.create_order(playwright, base_url, get_user_credentials)
 
     # Log in to the shop
     browser = playwright.chromium.launch() # Prod
@@ -26,8 +24,8 @@ def test_e2e_web_api(playwright: Playwright):
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://rahulshettyacademy.com/client/")
-    page.locator("#userEmail").fill(user_credentials["email"])
-    page.locator("#userPassword").fill(user_credentials["password"])
+    page.locator("#userEmail").fill(get_user_credentials["email"])
+    page.locator("#userPassword").fill(get_user_credentials["password"])
     page.get_by_role("button", name = "Login").click()
 
     # Check if the order is in the order history in the UI

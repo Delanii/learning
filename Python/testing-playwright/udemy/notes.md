@@ -73,7 +73,9 @@ opens two browsers:
 - the API context is set up with the `playwright.request.new_context()` method. One of the main features is defining the `base_url`.
 - the `request` member has methods connected with the HTTP methods: `post`, `get`, ...
 
-## Intercepting API response
+## Mocking API calls and responses
+
+### Mocking API responses
 
 - intercept the API response and change it before the response reaches the client browser. With that, you can mock different application states which might be hard to reach otherwise.
 - the actual interception is set up with a listener `page.route(url, handler, times)`:
@@ -81,3 +83,18 @@ opens two browsers:
   + `url`: the API call URL. Accepts wildcards, so `https://dest/orders/*` intercepts all orders
   + `handler`: is a function that is triggerred when playwright registers the `url`. The function has to accept the `route` meta argument that refers to the `url`, like `def myfunction(route): pass`
   + `times`: how many times should the interception happen. 
+
+### Mocking API calls
+
+- API call mocking is done with the same `page.route` listener as in the previos section
+
+## Using cookies
+
+- after login, the login token is stored in the browser's local storage
+- until the token expires, it is loaded again to the browser local storage when you return to the page
+- `page.add_init_script` is used to add JS to run before opening the page
+- interaction with the browser local storage is with:
+
+```js
+localStorage.setItem('key', 'value')
+```

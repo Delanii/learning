@@ -156,3 +156,35 @@ def pytest_addoption(parser):
         "--browser_name", action = "store", default = "chromium", help = "Select the browser to run the tests."
     )
 ```
+
+# BDD
+
+- = behavior driven development
+- the test is described in a plain language as a scenario. The steps of the scenario are linked with the actual code.
+- BDD definition forms a sort of a contract, where the test implementation has to reference all entries (steps) in the scenario
+- the test execution sequence is defined in the feature file -- each `given`, `when`, `then` line is linked with a function and the linked functions run in the sequence defined by the order of descriptions in the feature file
+- BDD functionality is available through the `pytest-bdd` package
+
+## Cucumber BDD
+
+- `Feature`: references the whole suite of tests in the related test file
+- `Scenario`: is a descrption of a specific test
+- `Given`: discloses all prerequisites or all steps before validating the test
+- `When`: defines the action that is being evaluated/checked with the test
+- `Then`: describes the state which means the test success
+- `And`: adds items to `Given`, `When` or `Then`, basically concatenating them
+- `Scenario Outline`: allows you to put in placeholders like <number>, where you later on define an example value for the number like:
+
+```
+Examples:
+| number  |
+| 6       |
+```
+- to get the placeholder values into the test from the feature file:
+
+  1. Update the BDD description in the decorator as: `Then This is starting to get <ridiculous>` => `Then This is starting to get {ridiculous}` to get the `ridiculous` value available in the test.
+  2. The parameters have to be a part of the implementing function signature.
+  3. The parameters are available in the function body.
+
+- the feature file is linked with the test implementation through the `@given`, `@when` and `@then` decorators, like `@when("This seems like a bit of a nonsense)`, which have to match _literally_ with the descriptions in the feature file
+- each decorator has to be assigned to one method, so you have to develop the test structure with the methods dictated by the feature file

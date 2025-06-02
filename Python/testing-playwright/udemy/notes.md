@@ -25,6 +25,16 @@
 - `yield` keyword is used to introduce async to the tests. `yield` pauses the execution until the rest of the tests finishes
 - skipping tests is done with an anotation `@pytest.mark.skip`
 - you can tag tests with the anotation `@pytest.mark.tag_name` and then run only tagged tests with `pytest -m tag_name`
+- it is possible to run a group of tests based on their name: `pytest -k e2e` runs only tests that contain "e2e" in their name (in the name of the test function)
+- running tests in parallel is done with the `pytest-xdist` package and with the command `pytest -n number`, where `number` is the number of workers for testing
+- to generate HTML test reports, install the `pytest-html` package and add the `--html=file_name.html` cmdline option
+- test tracing is available from pytest directly:
+
+  - `pytest --tracing on`: store tracing for all tests
+  - `off`: default
+  - `retain_on_failure`: store tracing for failed tests only
+
+- out the contents of the `test_results` folder in the link `trace.playwright.dev`
 
 # Playwright
 
@@ -128,7 +138,21 @@ def test_my_test(user_credentials):
     assert user_credentials
 ```
 
+- `request` is a global fixture that contains the test parameters and command-line arguments used to run the test
+
 # Page object model design
 
 - the idea behind the page object model design is to separate page actions and navigation to a dedicated class instead of keeping it in the test logic
 - each page that the tests visit should have it's own page class
+
+# Set up the test environment through global variables
+
+- the variables defined on CLI when running the tests are available in the `request.config.getoption("key_name")`, where `key_name` is the key provided on the cmdline, so `pytest --key_name value` gets the `value`
+- it's also necessary to add the cmdline option to the pytest parser, so it stores the key-value pair:
+
+```python conftest.py
+def pytest_addoption(parser):
+    parser.addoption(
+        "--browser_name", action = "store", default = "chromium", help = "Select the browser to run the tests."
+    )
+```

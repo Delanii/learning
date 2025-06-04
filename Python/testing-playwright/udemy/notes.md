@@ -188,3 +188,12 @@ Examples:
 
 - the feature file is linked with the test implementation through the `@given`, `@when` and `@then` decorators, like `@when("This seems like a bit of a nonsense)`, which have to match _literally_ with the descriptions in the feature file
 - each decorator has to be assigned to one method, so you have to develop the test structure with the methods dictated by the feature file
+
+# Jenkins CI/CD 
+
+- running: `jenkins --httpPort=portNumber`, then, the Jenkins dashboard is available on localhost:portNumber
+- it's possible to run tests on the local device -- "General" -> "Advanced" -> "Use custom workspace" and input the absolute folder path of the test suite in the text field
+- in build steps, it's possible to just run shell in the folder selected previously -- add the "Execute shell" step and write the shell command there (`pytest -s --html=report.html`)
+- to parametrize the shell command, go to "General", select "This project is parametrized", then select the parameter type, name, available values and fill in the parameter description. The parameter can be referenced in the shell build step like: `pytest -s --browser_name="$browser" --html=report.html` (double-quoted environment variable)
+- scheduling is set up in the "Triggers" section. The "Build periodically" option accepts schedule specification as a crontab entry
+- to trigger manually, click "Build now". When you click on the running build, you can inspect the console in the "Console output"

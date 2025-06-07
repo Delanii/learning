@@ -197,3 +197,169 @@ Examples:
 - to parametrize the shell command, go to "General", select "This project is parametrized", then select the parameter type, name, available values and fill in the parameter description. The parameter can be referenced in the shell build step like: `pytest -s --browser_name="$browser" --html=report.html` (double-quoted environment variable)
 - scheduling is set up in the "Triggers" section. The "Build periodically" option accepts schedule specification as a crontab entry
 - to trigger manually, click "Build now". When you click on the running build, you can inspect the console in the "Console output"
+
+# Interview Q&A
+
+## Difference between a list and a tuple
+
+- lists are mutable
+- individual list items can have different types
+
+## Python built-in data types
+
+- string
+- char
+- integer
+- float
+- buffer
+- list
+- tuple
+- dictionary
+- boolean
+
+## Inheritance in Python
+
+```python
+class Parent:
+  def greet(self):
+    print("Hello from parent.")
+
+class Child(Parent): # just add `Parent` as an argument to the `Child` class
+  def hi(self):
+    print(super().greet() + "Hi from child.")
+
+c = Child()
+c.hi()
+c.greet()
+```
+
+## What is `__init__` in Python
+
+- class constructor
+- defines the initial state of an object of the class
+
+## Open or write file
+
+```python
+with open("file/path", 'w') as file: # (there's `a` for appending to a file or `r` for reading from a file, `w` overwrites)
+file.write("content") # reading is with `f.read()`
+```
+
+## What are fixtures
+
+- Covered at the top of the notes
+
+## How to use `yield` for setup teardown
+
+```python
+import pytest
+
+@pytest.fixture
+def sample_data():
+	print("\nCreating test data")
+	data = {"name" = "John", "age" = 30}
+	yield data
+	print("Cleaning up test environment")
+	
+def test_my_test(sample_data):
+	assert sample_data["age"] == 30
+	print("Test OK")
+```
+
+Order of execution:
+
+1. Pytest starts running the test. Since the test has a fixture as an argument, pytest switches to running the fixture first.
+2. Fixture runs up until the keyword `yield`. `yield` returns the data and hands over the execution to the test function.
+3. Test runs.
+4. After the test finishes, pytest switches to running the rest of the fixture, which can be used for the script teardown.
+
+## How to work with list of dictionaries?
+
+```python
+data = [{"name" = "John", "age" = 30},
+		{"name" = "Pete", "age" = 35}]
+pete = data[1]["name"]
+```
+
+## What is `lambda` and how it's used with the `map` and `filter` functions
+
+- `lambda` is to define anonymous functions
+- `map()` applies the function to each item in the list, `filter()` applies a boolean function to each item in the list; if the function's result is `True`, the item stays, otherwise it's removed
+
+```python
+numbers = [1, 2, 3, 4, 5]
+new_list = list(map(lambda x: x * 2, numbers)) # `map()` returns the `Map` object
+another_list = list(filter(lambda x: x > 3, numbers))
+```
+
+## Is Python sync or async?
+
+Python execution is synchronous by default. Asynchronous code is provided by the `asyncio` library.
+
+```python
+import asyncio
+
+async def mytask(name):
+	print(f"My name is {name}.")
+	await asyncio.sleep(2)
+	print(f"I specified this name: {name}.")
+	
+async def main():
+	await asyncio.gather(
+	  mytask("myself"),
+	  mytask("other"))
+
+asyncio.run(main())
+```
+
+## What is `self`
+
+`self` refers to the current instance of the class/current object of the class.
+
+## Reverse list
+
+```python
+mylist = [1, 2, 5, 6]
+reversed = mylist[::-1]
+```
+
+## What is the difference between `@classmethod` and instance method
+
+- `@classmethod` is the same as a static method in Java -- it doesn't need an instance of the class for calling
+
+```python
+class MyClass:
+
+	@classmethod
+	def class_method(cls):
+		return "classmethod"
+
+	def instance_method(self):
+		return "instance"
+		
+obj = MyClass()
+print(obj.instance_method())
+print(MyClass.class_method())
+```
+
+## How to rerun only failed tests
+
+```
+pytest --last-failed
+```
+
+## How handle exceptions in Python
+
+- `try`/`except` blocks to gracefuly handle errors or issues
+- the `finally` block always runs, regardless of errors
+
+```python
+try:
+	with open("nonexistent.txt", 'r') as missing:
+		data = missing.read()
+		print(data)
+except FileNotFoundError as not_found:
+	print(not_found)
+finally:
+	print("Always printed.")
+```

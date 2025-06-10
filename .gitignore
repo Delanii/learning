@@ -3,6 +3,10 @@
 notes.org
 **/slides/
 
+# Ignore completion certificates
+
+*.pdf
+
 # Ignore build and test artifacts
 
 out/

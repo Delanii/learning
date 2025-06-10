@@ -25,6 +25,15 @@
 - `yield` keyword is used to introduce async to the tests. `yield` pauses the execution until the rest of the tests finishes
 - skipping tests is done with an anotation `@pytest.mark.skip`
 - you can tag tests with the anotation `@pytest.mark.tag_name` and then run only tagged tests with `pytest -m tag_name`
+- it is possible to ad multiple tags to a test like:
+
+```python
+@pytest.mark.smoke
+@pytest.mark.windows
+def test_will_fail():
+    assert False
+```
+
 - it is possible to run a group of tests based on their name: `pytest -k e2e` runs only tests that contain "e2e" in their name (in the name of the test function)
 - running tests in parallel is done with the `pytest-xdist` package and with the command `pytest -n number`, where `number` is the number of workers for testing
 - to generate HTML test reports, install the `pytest-html` package and add the `--html=file_name.html` cmdline option

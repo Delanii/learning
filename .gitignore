@@ -3,6 +3,10 @@
 notes.org
 **/slides/
 
+# Ignore comletion certificates
+
+*.pdf
+
 # Ignore build and test artifacts
 
 out/
@@ -15,4 +19,4 @@ bin/
 .idea/
 *.iml
 .vscode/
-.venv
+.venv/

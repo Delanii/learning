@@ -3,7 +3,7 @@
 notes.org
 **/slides/
 
-# Ignore comletion certificates
+# Ignore completion certificates
 
 *.pdf
 

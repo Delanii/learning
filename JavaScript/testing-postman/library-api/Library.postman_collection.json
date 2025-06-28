@@ -26,7 +26,10 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json;charset=UTF-8\");",
 							"    pm.expect(pm.response.text()).to.include(\"successfully added\");",
-							"})"
+							"})",
+							"",
+							"pm.collectionVariables.unset(\"book-id\");",
+							"pm.collectionVariables.set(\"book-id\", jsonResponse.ID);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -52,7 +55,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"A little first book\",\n    \"isbn\": \"{{isbn}}\",\n    \"aisle\": 12856472,\n    \"author\": \"Myself II\"\n}",
+					"raw": "{\n    \"name\": \"A little first book\",\n    \"isbn\": \"{{isbn}}\",\n    \"aisle\": 12856472,\n    \"author\": \"{{author}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -150,11 +153,60 @@
 		},
 		{
 			"name": "GetBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseBody = pm.response.json();",
+							"const schema = {",
+							"  \"type\": \"array\",",
+							"  \"items\": [",
+							"    {",
+							"      \"type\": \"object\",",
+							"      \"properties\": {",
+							"        \"book_name\": {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        \"isbn\": {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        \"aisle\": {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        \"author\": {",
+							"          \"type\": \"string\"",
+							"        }",
+							"      },",
+							"      \"required\": [",
+							"        \"book_name\",",
+							"        \"isbn\",",
+							"        \"aisle\",",
+							"        \"author\"",
+							"      ]",
+							"    }",
+							"  ]",
+							"};",
+							"",
+							"pm.test(\"Validate JSON response\", function() {",
+							"    const author = responseBody[0].author;",
+							"    pm.expect(author).to.be.eql(pm.collectionVariables.get(\"author\"));",
+							"});",
+							"",
+							"pm.test(\"Validate response structure\", function(){",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base-url}}/Library/GetBook.php?ID=flec12856472",
+					"raw": "{{base-url}}/Library/GetBook.php?ID={{book-id}}",
 					"host": [
 						"{{base-url}}"
 					],
@@ -165,7 +217,7 @@
 					"query": [
 						{
 							"key": "ID",
-							"value": "flec12856472"
+							"value": "{{book-id}}"
 						}
 					]
 				}
@@ -247,12 +299,26 @@
 		},
 		{
 			"name": "DeleteBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check the response status\", function() {",
+							"  pm.expect(pm.response.code).to.be.eql(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"ID\": \"flec12856472\"\n}",
+					"raw": "{\n    \"ID\": \"{{book-id}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -375,6 +441,16 @@
 		{
 			"key": "isbn",
 			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "book-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "author",
+			"value": "Myself II",
 			"type": "string"
 		}
 	]

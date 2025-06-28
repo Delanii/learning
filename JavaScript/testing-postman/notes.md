@@ -56,6 +56,43 @@ pm.test("Check success status", function(){
 
 - Postman assertions are using "chai" syntax
 
+#### Validate JSON response against schema
+
+```js
+const schema = {
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "book_name": {
+          "type": "string"
+        },
+        "isbn": {
+          "type": "string"
+        },
+        "aisle": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "book_name",
+        "isbn",
+        "aisle",
+        "author"
+      ]
+    }
+  ]
+};
+
+pm.test("Validate response structure", function() {
+  pm.response.to.have.jsonSchema(schema);
+});
+```
+
 ### Accessing variables
 
 - Postman built-in variables:
